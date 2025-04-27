@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Rentr | Rental Management Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .bg-light-blue {
+            background-color: #f8faff;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+        .btn-outline {
+            border: 1px solid #2563eb;
+            color: #2563eb;
+        }
+        .btn-outline:hover {
+            background-color: #f0f4ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-home text-[#2563EB] text-2xl"></i>
+                <span class="text-xl font-semibold text-gray-800">Rentr</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-600 hover:text-[#2563EB] transition-colors">Home</a>
+                <a href="#" class="text-gray-600 hover:text-[#2563EB] transition-colors">Browse</a>
+                <a href="#" class="text-gray-600 hover:text-[#2563EB] transition-colors">How it Works</a>
+                <a href="#" class="text-gray-600 hover:text-[#2563EB] transition-colors">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="hidden md:block text-[#2563EB] hover:text-[#1D4ED8] px-4 py-2 transition-colors">
+                    Log In
+                </a>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="flex-grow bg-light-blue flex items-center justify-center py-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Welcome to Rentr</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">Your trusted platform to find rentals and manage properties seamlessly.</p>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="signup.html" class="btn-primary text-white font-medium py-4 px-8 rounded-lg transition-colors flex items-center justify-center gap-3">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Sign Up</span>
+                </a>
+                <a href="login.html" class="btn-outline font-medium py-4 px-8 rounded-lg transition-colors flex items-center justify-center gap-3">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Log In</span>
+                </a>
+            </div>
+            
+            <!-- Additional Info -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="text-[#2563EB] text-3xl mb-4">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Find Your Perfect Home</h3>
+                    <p class="text-gray-600">Browse thousands of verified listings with detailed information.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="text-[#2563EB] text-3xl mb-4">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">List Your Property</h3>
+                    <p class="text-gray-600">Reach qualified renters and manage your property efficiently.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="text-[#2563EB] text-3xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Trusted Platform</h3>
+                    <p class="text-gray-600">Secure payments and verified profiles for peace of mind.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 px-6 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-home text-[#2563EB] text-2xl"></i>
+                        <span class="text-xl font-semibold text-gray-800">Rentr</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Finding your perfect home made simple and easy.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-500 hover:text-[#2563EB]"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-[#2563EB]"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-[#2563EB]"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-500 hover:text-[#2563EB]"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">About Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">Careers</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">Blog</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">Help Center</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">Safety Center</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">Community Guidelines</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-[#2563EB]">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Newsletter</h3>
+                    <p class="text-gray-600 mb-4">Subscribe to our newsletter for the latest listings and tips.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-[#2563EB] focus:border-[#2563EB] w-full">
+                        <button class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-4 py-2 rounded-r-lg transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 Rentr. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-[#2563EB] text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-[#2563EB] text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-[#2563EB] text-sm">Cookies Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
