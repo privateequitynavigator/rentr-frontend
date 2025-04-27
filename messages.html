@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | Rentr</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8faff;
+        }
+        .chat-bubble-you {
+            background-color: #2563eb;
+            color: white;
+            border-radius: 18px 18px 0 18px;
+        }
+        .chat-bubble-other {
+            background-color: white;
+            color: #1f2937;
+            border-radius: 18px 18px 18px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .unread-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2563eb;
+            border-radius: 50%;
+        }
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .section-header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: absolute;
+                z-index: 50;
+                height: 100vh;
+            }
+            .sidebar-open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
+        <div class="flex items-center space-x-8">
+            <a href="#" class="text-2xl font-bold text-blue-600">Rentr</a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-700 hover:text-blue-600">Home</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">Browse</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">How it Works</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">Contact</a>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="relative">
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Profile" class="w-10 h-10 rounded-full cursor-pointer">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex h-[calc(100vh-80px)] overflow-hidden">
+        <!-- Sidebar (Left) -->
+        <div id="sidebar" class="sidebar w-full md:w-80 bg-white border-r border-gray-200 flex flex-col">
+            <!-- Search Bar -->
+            <div class="p-4 border-b border-gray-200 section-header">
+                <div class="relative">
+                    <input type="text" placeholder="Search chats..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Chat List -->
+            <div class="flex-1 overflow-y-auto">
+                <!-- Properties You Own (Renter) -->
+                <div class="section-header bg-gray-50 px-4 py-2 border-b border-gray-200">
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Properties You Own</h3>
+                </div>
+                
+                <!-- Chat Tile 1 (Unread) -->
+                <div class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start space-x-3">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9kZXJuJTIwYXBhcnRtZW50fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Property" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-medium text-gray-900 truncate">Modern Apartment in New York</h3>
+                            <span class="text-xs text-gray-500 whitespace-nowrap">2m ago</span>
+                        </div>
+                        <p class="text-sm text-gray-500 truncate">John: When can I view?</p>
+                    </div>
+                    <div class="unread-dot mt-1"></div>
+                </div>
+
+                <!-- Chat Tile 2 -->
+                <div class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start space-x-3">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Property" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-medium text-gray-900 truncate">Beachfront Villa in Miami</h3>
+                            <span class="text-xs text-gray-500 whitespace-nowrap">1h ago</span>
+                        </div>
+                        <p class="text-sm text-gray-500 truncate">Sarah: The contract looks good</p>
+                    </div>
+                </div>
+
+                <!-- Properties You Rent (Customer) -->
+                <div class="section-header bg-gray-50 px-4 py-2 border-b border-gray-200">
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Properties You Rent</h3>
+                </div>
+                
+                <!-- Chat Tile 3 -->
+                <div class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start space-x-3">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhvdXNlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Property" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-medium text-gray-900 truncate">Downtown Loft in Chicago</h3>
+                            <span class="text-xs text-gray-500 whitespace-nowrap">1d ago</span>
+                        </div>
+                        <p class="text-sm text-gray-500 truncate">You: I'll send the documents tomorrow</p>
+                    </div>
+                </div>
+
+                <!-- Chat Tile 4 -->
+                <div class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start space-x-3">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aG91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Property" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-medium text-gray-900 truncate">Mountain Cabin in Colorado</h3>
+                            <span class="text-xs text-gray-500 whitespace-nowrap">2d ago</span>
+                        </div>
+                        <p class="text-sm text-gray-500 truncate">Lisa: The heating issue has been fixed</p>
+                    </div>
+                </div>
+
+                <!-- Group Chats -->
+                <div class="section-header bg-gray-50 px-4 py-2 border-b border-gray-200">
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Group Chats</h3>
+                </div>
+                
+                <!-- Group Chat Tile 1 -->
+                <div class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start space-x-3">
+                    <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-medium text-gray-900 truncate">Beachfront Villa - All Tenants</h3>
+                            <span class="text-xs text-gray-500 whitespace-nowrap">3h ago</span>
+                        </div>
+                        <p class="text-sm text-gray-500 truncate">Michael: Let's schedule a meeting</p>
+                    </div>
+                </div>
+
+                <!-- Group Chat Tile 2 -->
+                <div class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start space-x-3">
+                    <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-medium text-gray-900 truncate">Downtown Loft - Maintenance</h3>
+                            <span class="text-xs text-gray-500 whitespace-nowrap">1d ago</span>
+                        </div>
+                        <p class="text-sm text-gray-500 truncate">Maintenance: Elevator will be fixed tomorrow</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Window -->
+        <div class="flex-1 flex flex-col bg-white">
+            <!-- Chat Header -->
+            <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9kZXJuJTIwYXBhcnRtZW50fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Property" class="w-10 h-10 rounded-lg object-cover">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 class="font-semibold text-gray-900">Modern Apartment in New York</h2>
+                            <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">You Own</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Chat with John Smith</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="fas fa-phone text-gray-600"></i>
+                    </button>
+                    <button class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="fas fa-video text-gray-600"></i>
+                    </button>
+                    <button class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="fas fa-ellipsis-v text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="flex-1 p-4 overflow-y-auto bg-gray-50">
+                <!-- Date Divider -->
+                <div class="flex justify-center my-4">
+                    <span class="px-3 py-1 bg-gray-200 rounded-full text-xs text-gray-600">Today</span>
+                </div>
+
+                <!-- Other's Message -->
+                <div class="flex mb-4">
+                    <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="John" class="w-8 h-8 rounded-full mr-3 mt-1">
+                    <div>
+                        <div class="chat-bubble-other px-4 py-2 mb-1 max-w-xs md:max-w-md">
+                            <p>Hi there! I'm interested in viewing the apartment. When would be a good time?</p>
+                        </div>
+                        <span class="text-xs text-gray-500">John Smith • 10:15 AM</span>
+                    </div>
+                </div>
+
+                <!-- Your Message -->
+                <div class="flex justify-end mb-4">
+                    <div class="text-right">
+                        <div class="chat-bubble-you px-4 py-2 mb-1 max-w-xs md:max-w-md inline-block">
+                            <p>Hello John! We have viewings available this Thursday between 2-5pm. Would that work for you?</p>
+                        </div>
+                        <span class="text-xs text-gray-500">10:18 AM</span>
+                    </div>
+                </div>
+
+                <!-- Other's Message -->
+                <div class="flex mb-4">
+                    <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="John" class="w-8 h-8 rounded-full mr-3 mt-1">
+                    <div>
+                        <div class="chat-bubble-other px-4 py-2 mb-1 max-w-xs md:max-w-md">
+                            <p>Thursday at 3pm would be perfect for me. Could you send me the exact address?</p>
+                        </div>
+                        <span class="text-xs text-gray-500">John Smith • 10:20 AM</span>
+                    </div>
+                </div>
+
+                <!-- Your Message -->
+                <div class="flex justify-end mb-4">
+                    <div class="text-right">
+                        <div class="chat-bubble-you px-4 py-2 mb-1 max-w-xs md:max-w-md inline-block">
+                            <p>Sure! The address is 123 Park Avenue, Apt 4B. I'll meet you in the lobby at 2:50pm.</p>
+                        </div>
+                        <span class="text-xs text-gray-500">10:22 AM</span>
+                    </div>
+                </div>
+
+                <!-- Other's Message -->
+                <div class="flex mb-4">
+                    <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="John" class="w-8 h-8 rounded-full mr-3 mt-1">
+                    <div>
+                        <div class="chat-bubble-other px-4 py-2 mb-1 max-w-xs md:max-w-md">
+                            <p>Great, looking forward to it! Could you also send me some more photos of the kitchen and bathroom?</p>
+                        </div>
+                        <span class="text-xs text-gray-500">John Smith • 10:23 AM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Input -->
+            <div class="p-4 border-t border-gray-200 bg-white">
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 rounded-full hover:bg-gray-100">
+                        <i class="fas fa-paperclip text-gray-600"></i>
+                    </button>
+                    <input type="text" placeholder="Type a message..." class="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <button class="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('sidebar-open');
+        });
+
+        // Chat selection functionality
+        const chatTiles = document.querySelectorAll('.p-4.border-b.border-gray-200.hover\\:bg-gray-50.cursor-pointer');
+        chatTiles.forEach(tile => {
+            tile.addEventListener('click', function() {
+                // Remove active state from all tiles
+                chatTiles.forEach(t => t.classList.remove('bg-blue-50'));
+                // Add active state to clicked tile
+                this.classList.add('bg-blue-50');
+                
+                // Here you would normally load the chat content via AJAX
+                // For this demo, we're just showing the same chat window
+            });
+        });
+    </script>
+</body>
+</html>
