@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renter Dashboard | Rentr</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8faff;
+        }
+        .dashboard-card {
+            @apply bg-white rounded-xl shadow-sm p-6;
+        }
+        .sidebar-card {
+            @apply bg-white rounded-xl shadow-sm p-4 mb-4;
+        }
+        .nav-link {
+            @apply text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium;
+        }
+        .nav-link.active {
+            @apply text-blue-600 border-b-2 border-blue-600;
+        }
+        .stat-card {
+            @apply bg-white rounded-xl shadow-sm p-4 flex-1 min-w-[200px];
+        }
+        .property-card {
+            @apply bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200;
+        }
+        .action-btn {
+            @apply text-blue-600 hover:text-blue-800 font-medium text-sm;
+        }
+        @media (max-width: 768px) {
+            .stats-container {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            .stat-card {
+                display: inline-block;
+                width: 80%;
+                margin-right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-blue-600 font-bold text-xl">Rentr</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-4">
+                        <a href="#" class="nav-link">Home</a>
+                        <a href="#" class="nav-link">Browse</a>
+                        <a href="#" class="nav-link active">My Properties</a>
+                        <a href="#" class="nav-link">Messages</a>
+                        <a href="#" class="nav-link">Profile</a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div class="relative">
+                        <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none">
+                            <span class="sr-only">Notifications</span>
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                        </button>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </div>
+                    <button class="ml-4 bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none">
+                        <span class="sr-only">Profile</span>
+                        <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                            <span class="text-gray-600 text-sm">JD</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Main Content Area -->
+            <div class="w-full lg:w-3/4">
+                <!-- Welcome Header -->
+                <div class="mb-8">
+                    <h1 class="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+                    <p class="text-gray-600">Welcome back, John! Here's what's happening with your properties.</p>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="stats-container flex gap-4 mb-8 overflow-x-auto pb-2">
+                    <div class="stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Rent Collected</p>
+                                <p class="text-2xl font-bold">$8,450</p>
+                            </div>
+                            <div class="bg-blue-100 p-2 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <span class="text-green-500">+12%</span> from last month
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Properties Listed</p>
+                                <p class="text-2xl font-bold">7</p>
+                            </div>
+                            <div class="bg-blue-100 p-2 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <span class="text-green-500">2</span> new this quarter
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Messages Pending</p>
+                                <p class="text-2xl font-bold">14</p>
+                            </div>
+                            <div class="bg-blue-100 p-2 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <span class="text-red-500">5</span> urgent
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Pending Rent Payments</p>
+                                <p class="text-2xl font-bold">$2,150</p>
+                            </div>
+                            <div class="bg-blue-100 p-2 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <span class="text-red-500">3</span> overdue
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div class="dashboard-card mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-900">Rent Collection Trends</h2>
+                        <div class="flex items-center">
+                            <select class="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                <option>All Properties</option>
+                                <option>Modern Apartment</option>
+                                <option>Downtown Loft</option>
+                                <option>Garden Villa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="rentChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Conversion Rate Tile -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="dashboard-card">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Listing Performance</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-3xl font-bold">23%</p>
+                                <p class="text-sm text-gray-500">Conversion Rate</p>
+                            </div>
+                            <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                +2.5% from last month
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Views</p>
+                                <p class="text-lg font-medium">1,245</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Total Inquiries</p>
+                                <p class="text-lg font-medium">286</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Performing Listings -->
+                    <div class="dashboard-card">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Top Performing Listings</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-md overflow-hidden mr-3">
+                                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Property" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Modern Apartment</p>
+                                    <p class="text-sm text-gray-500">28 inquiries</p>
+                                </div>
+                                <div class="text-blue-600 font-medium">$1,200/mo</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-md overflow-hidden mr-3">
+                                    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Property" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Downtown Loft</p>
+                                    <p class="text-sm text-gray-500">19 inquiries</p>
+                                </div>
+                                <div class="text-blue-600 font-medium">$2,500/mo</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-md overflow-hidden mr-3">
+                                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Property" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Garden Villa</p>
+                                    <p class="text-sm text-gray-500">15 inquiries</p>
+                                </div>
+                                <div class="text-blue-600 font-medium">$1,800/mo</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Rent Collection -->
+                <div class="dashboard-card mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-900">Pending Rent Collection</h2>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">View All</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tenant</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Property</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount Due</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                                                <span class="text-gray-600">MS</span>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Michael Scott</div>
+                                                <div class="text-sm text-gray-500">michael@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Modern Apartment</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">$1,200</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">May 5, 2023</div>
+                                        <div class="text-xs text-red-500">Overdue by 3 days</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Overdue</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="action-btn">Send Reminder</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                                                <span class="text-gray-600">JD</span>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Jim Halpert</div>
+                                                <div class="text-sm text-gray-500">jim@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Downtown Loft</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">$2,500</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">May 10, 2023</div>
+                                        <div class="text-xs text-yellow-500">Due in 2 days</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="action-btn">Send Reminder</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                                                <span class="text-gray-600">PB</span>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">Pam Beesly</div>
+                                                <div class="text-sm text-gray-500">pam@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">Garden Villa</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">$1,800</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">May 15, 2023</div>
+                                        <div class="text-xs text-gray-500">Due in 7 days</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Upcoming</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="action-btn">Send Reminder</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pending Tasks -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="dashboard-card">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-medium text-gray-900">Maintenance Requests</h3>
+                            <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">View All</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 p-2 rounded-lg mr-3">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Kitchen sink clogged</p>
+                                    <p class="text-sm text-gray-500">Modern Apartment - Submitted 2 days ago</p>
+                                </div>
+                                <button class="action-btn">Assign</button>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 p-2 rounded-lg mr-3">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">AC not cooling</p>
+                                    <p class="text-sm text-gray-500">Downtown Loft - Submitted 1 day ago</p>
+                                </div>
+                                <button class="action-btn">Assign</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-medium text-gray-900">Expiring Leases</h3>
+                            <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">View All</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 p-2 rounded-lg mr-3">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Modern Apartment Lease</p>
+                                    <p class="text-sm text-gray-500">Expires in 30 days - Michael Scott</p>
+                                </div>
+                                <button class="action-btn">Renew</button>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 p-2 rounded-lg mr-3">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-medium">Garden Villa Lease</p>
+                                    <p class="text-sm text-gray-500">Expires in 45 days - Pam Beesly</p>
+                                </div>
+                                <button class="action-btn">Renew</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="w-full lg:w-1/4">
+                <div class="sidebar-card">
+                    <h3 class="font-medium text-gray-900 mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Add New Property
+                        </button>
+                        <button class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                            </svg>
+                            Send Mass Message
+                        </button>
+                        <button class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download Reports
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="font-medium text-gray-900 mb-4">Profile Completion</h3>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>Profile Strength</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Basic Information</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-sm">Contact Details</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-yellow-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="text-sm">Bank Details</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="text-sm">Tax Information</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="font-medium text-gray-900 mb-4">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-3">
+                                <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm">Rent payment received from Michael Scott</p>
+                                <p class="text-xs text-gray-500">2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-3">
+                                <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm">New lease signed for Downtown Loft</p>
+                                <p class="text-xs text-gray-500">1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-3">
+                                <div class="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm">Maintenance request submitted for Garden Villa</p>
+                                <p class="text-xs text-gray-500">2 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize rent chart
+        const ctx = document.getElementById('rentChart').getContext('2d');
+        const rentChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Rent Collected',
+                    data: [6500, 5900, 8000, 8100, 5600, 7500, 8200, 7300, 9400, 10100, 8700, 10500],
+                    backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                    borderColor: 'rgba(37, 99, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Mobile menu toggle would go here if needed
+    </script>
+</body>
+</html>
